@@ -1,7 +1,9 @@
 package com.arkapp.bookstore.data.authentication
 
 import android.app.Activity
+import androidx.navigation.findNavController
 import com.arkapp.bookstore.R
+import com.arkapp.bookstore.data.repository.PrefRepository
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.AuthUI.IdpConfig
 import com.firebase.ui.auth.AuthUI.IdpConfig.EmailBuilder
@@ -35,3 +37,13 @@ fun Activity.openLoginScreen() {
 }
 
 fun getCurrentUser() = FirebaseAuth.getInstance().currentUser
+
+fun Activity.signOut(prefRepository: PrefRepository) {
+    AuthUI.getInstance()
+        .signOut(this)
+        .addOnCompleteListener {
+            prefRepository.setLoggedIn(false)
+            findNavController(R.id.fragment).navigate(R.id.action_settingFragment_to_splashFragment)
+
+        }
+}
