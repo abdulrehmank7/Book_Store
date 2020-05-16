@@ -1,4 +1,4 @@
-package com.arkapp.bookstore.ui.main
+package com.arkapp.bookstore.ui.favourites
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -17,7 +17,7 @@ import com.arkapp.bookstore.utils.loadImage
  * Contact email - abdulrehman0796@gmail.com
  */
 
-class BookListAdapter(
+class FavouriteListAdapter(
     private val books: ArrayList<Book>,
     private val prefRepository: PrefRepository,
     private val navController: NavController
@@ -46,7 +46,7 @@ class BookListAdapter(
 
         binding.parent.setOnClickListener {
             prefRepository.openedBook(bookData)
-            navController.navigate(R.id.action_homeFragment_to_bookDetailsFragment)
+            navController.navigate(R.id.action_favouritesFragment_to_bookDetailsFragment)
         }
     }
 

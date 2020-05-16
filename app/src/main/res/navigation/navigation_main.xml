@@ -29,7 +29,11 @@
         android:id="@+id/favouritesFragment"
         android:name="com.arkapp.bookstore.ui.favourites.FavouritesFragment"
         android:label="Favourites Books"
-        tools:layout="@layout/fragment_favourites" />
+        tools:layout="@layout/fragment_favourites">
+        <action
+            android:id="@+id/action_favouritesFragment_to_bookDetailsFragment"
+            app:destination="@id/bookDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/borrowedFragment"

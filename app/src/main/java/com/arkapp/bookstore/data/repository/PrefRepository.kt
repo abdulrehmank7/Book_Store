@@ -4,9 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.arkapp.bookstore.data.models.Book
 import com.arkapp.bookstore.data.preferences.PREFERENCE_NAME
+import com.arkapp.bookstore.data.preferences.PREF_FAVOURITE_BOOK
 import com.arkapp.bookstore.data.preferences.PREF_LOGGED_IN
 import com.arkapp.bookstore.data.preferences.PREF_OPENED_BOOK
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 
 class PrefRepository(val context: Context) {
@@ -72,7 +74,36 @@ class PrefRepository(val context: Context) {
         PREF_OPENED_BOOK.put(gson.toJson(book))
     }
 
-    fun openedBook() = gson.fromJson(PREF_OPENED_BOOK.getString(), Book::class.java)
+    fun openedBook(): Book = gson.fromJson(PREF_OPENED_BOOK.getString(), Book::class.java)
 
+    fun addToFavourite(book: Book) {
+
+        val allFavBooks = getFavouriteBooks()
+        allFavBooks.add(book)
+        PREF_FAVOURITE_BOOK.put(gson.toJson(allFavBooks))
+    }
+
+    fun removeFavourite(book: Book) {
+
+        val allFavBooks = getFavouriteBooks()
+        allFavBooks.remove(book)
+        PREF_FAVOURITE_BOOK.put(gson.toJson(allFavBooks))
+    }
+
+    fun isFavouriteExist(book: Book): Boolean {
+        val allFavBooks = getFavouriteBooks()
+        allFavBooks.find { it == book }.also {
+            return it != null
+        }
+    }
+
+    fun getFavouriteBooks(): ArrayList<Book> {
+        val type = object : TypeToken<ArrayList<Book>>() {}.type
+        PREF_FAVOURITE_BOOK.getString().apply {
+            return if (this.isNotEmpty()) {
+                gson.fromJson(this, type)
+            } else ArrayList()
+        }
+    }
 
 }

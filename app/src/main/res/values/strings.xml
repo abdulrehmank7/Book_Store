@@ -9,4 +9,11 @@
     <string name="setting">Setting</string>
     <string name="add_to_favourites">Add to favourites</string>
     <string name="borrow_book">Borrow Book</string>
+    <string name="most_searched">Most Searched</string>
+    <string name="best_seller">Best Seller</string>
+    <string name="new_arrival">New Arrival</string>
+    <string name="remove_from_fav">Remove from favourites</string>
+    <string name="no_favourites_found">No favourites found!</string>
+    <string name="login_sign_up">Login / Sign up</string>
+    <string name="login_failed">Login Failed</string>
 </resources>

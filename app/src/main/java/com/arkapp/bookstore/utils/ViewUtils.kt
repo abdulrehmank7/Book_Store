@@ -1,7 +1,7 @@
 package com.arkapp.bookstore.utils
 
-import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.util.DisplayMetrics
@@ -144,5 +144,25 @@ fun RecyclerView.initVerticalAdapter(adapter: RecyclerView.Adapter<RecyclerView.
     this.layoutManager = llm
     adapter.setHasStableIds(true)
     this.adapter = adapter
+}
+
+fun Context.showAlertDialog(
+    title: String,
+    message: String,
+    positiveTxt: String?,
+    negativeTxt: String,
+    positiveListener: DialogInterface.OnClickListener?
+) {
+
+    MaterialAlertDialogBuilder(this)
+        .setTitle(title)
+        .setMessage(message)
+        .setNegativeButton(negativeTxt) { dialog, _ -> dialog.dismiss() }
+        .apply {
+            if (!positiveTxt.isNullOrEmpty()) {
+                setPositiveButton(positiveTxt, positiveListener)
+            }
+            show()
+        }
 }
 

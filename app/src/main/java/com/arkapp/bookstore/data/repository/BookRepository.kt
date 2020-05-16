@@ -15,7 +15,12 @@ class BookRepository {
             Book(
                 "From Third World to First Hardcover – 2 October 2000",
                 "Lee Kuan Yew",
-                R.drawable.book1
+                R.drawable.book1,
+                isFavourite = false,
+                isBorrowed = false,
+                isMostSearch = true,
+                isBestSeller = false,
+                isNewArrival = false
             )
         )
 
@@ -23,7 +28,12 @@ class BookRepository {
             Book(
                 "This Is What Inequality Looks Like",
                 "Teo You Yenn",
-                R.drawable.book2
+                R.drawable.book2,
+                isFavourite = false,
+                isBorrowed = false,
+                isMostSearch = false,
+                isBestSeller = true,
+                isNewArrival = false
             )
         )
 
@@ -31,7 +41,12 @@ class BookRepository {
             Book(
                 "How We Disappeared",
                 "Jing-Jing Lee",
-                R.drawable.book3
+                R.drawable.book3,
+                isFavourite = false,
+                isBorrowed = false,
+                isMostSearch = false,
+                isBestSeller = false,
+                isNewArrival = true
             )
         )
 
@@ -39,7 +54,12 @@ class BookRepository {
             Book(
                 "Singapore: A Biography",
                 "Mark Ravinder Frost",
-                R.drawable.book4
+                R.drawable.book4,
+                isFavourite = false,
+                isBorrowed = false,
+                isMostSearch = false,
+                isBestSeller = true,
+                isNewArrival = false
             )
         )
 
@@ -47,7 +67,12 @@ class BookRepository {
             Book(
                 "Secrets of Singapore: Botanic Gardens",
                 "Monica Lim and Lesley-Anne Tan",
-                R.drawable.book5
+                R.drawable.book5,
+                isFavourite = false,
+                isBorrowed = false,
+                isMostSearch = true,
+                isBestSeller = false,
+                isNewArrival = false
             )
         )
 
@@ -55,7 +80,12 @@ class BookRepository {
             Book(
                 "Fistful of Colours",
                 "Suchen Christine Lim",
-                R.drawable.book6
+                R.drawable.book6,
+                isFavourite = false,
+                isBorrowed = false,
+                isMostSearch = false,
+                isBestSeller = false,
+                isNewArrival = true
             )
         )
 
@@ -63,7 +93,12 @@ class BookRepository {
             Book(
                 "Aunty Lee's Delights",
                 "Ovidia Yu",
-                R.drawable.book7
+                R.drawable.book7,
+                isFavourite = false,
+                isBorrowed = false,
+                isMostSearch = false,
+                isBestSeller = false,
+                isNewArrival = true
             )
         )
 
@@ -71,7 +106,12 @@ class BookRepository {
             Book(
                 "Ponti",
                 "Sharlene Teo",
-                R.drawable.book8
+                R.drawable.book8,
+                isFavourite = false,
+                isBorrowed = false,
+                isMostSearch = false,
+                isBestSeller = false,
+                isNewArrival = false
             )
         )
 
@@ -79,7 +119,12 @@ class BookRepository {
             Book(
                 "The Little Singapore Book",
                 "Joyceline See Tully and Sim Ee Waun",
-                R.drawable.book9
+                R.drawable.book9,
+                isFavourite = false,
+                isBorrowed = false,
+                isMostSearch = false,
+                isBestSeller = true,
+                isNewArrival = false
             )
         )
 
@@ -87,7 +132,12 @@ class BookRepository {
             Book(
                 "Notes from an Even Smaller Island",
                 "Neil Humphreys",
-                R.drawable.book10
+                R.drawable.book10,
+                isFavourite = false,
+                isBorrowed = false,
+                isMostSearch = false,
+                isBestSeller = false,
+                isNewArrival = true
             )
         )
 
@@ -95,7 +145,12 @@ class BookRepository {
             Book(
                 "Now That It's Over",
                 "O Thiam Chin",
-                R.drawable.book11
+                R.drawable.book11,
+                isFavourite = false,
+                isBorrowed = false,
+                isMostSearch = true,
+                isBestSeller = false,
+                isNewArrival = false
             )
         )
 
@@ -103,7 +158,12 @@ class BookRepository {
             Book(
                 "State of Emergency",
                 "Jeremy Tiang",
-                R.drawable.book12
+                R.drawable.book12,
+                isFavourite = false,
+                isBorrowed = false,
+                isMostSearch = false,
+                isBestSeller = false,
+                isNewArrival = false
             )
         )
 
@@ -111,7 +171,12 @@ class BookRepository {
             Book(
                 "Hard at Work: Life in Singapore",
                 "Gerard Sasges and Ng Shi Wen",
-                R.drawable.book13
+                R.drawable.book13,
+                isFavourite = false,
+                isBorrowed = false,
+                isMostSearch = false,
+                isBestSeller = false,
+                isNewArrival = true
             )
         )
 
@@ -119,7 +184,12 @@ class BookRepository {
             Book(
                 "Singapore Noir",
                 "Cheryl Lu-Lien Tan",
-                R.drawable.book14
+                R.drawable.book14,
+                isFavourite = false,
+                isBorrowed = false,
+                isMostSearch = false,
+                isBestSeller = true,
+                isNewArrival = false
             )
         )
 
@@ -127,7 +197,12 @@ class BookRepository {
             Book(
                 "Tall Order: The Goh Chok Tong Story (Volume 1)",
                 "Shing Huei Peh",
-                R.drawable.book15
+                R.drawable.book15,
+                isFavourite = false,
+                isBorrowed = false,
+                isMostSearch = false,
+                isBestSeller = false,
+                isNewArrival = true
             )
         )
 
@@ -135,7 +210,12 @@ class BookRepository {
             Book(
                 "Singapore: A Pictorial History, 1819-2000",
                 "Gretchen Liu",
-                R.drawable.book16
+                R.drawable.book16,
+                isFavourite = false,
+                isBorrowed = false,
+                isMostSearch = true,
+                isBestSeller = false,
+                isNewArrival = false
             )
         )
 

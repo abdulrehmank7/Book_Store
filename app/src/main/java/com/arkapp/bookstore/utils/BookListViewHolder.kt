@@ -1,4 +1,4 @@
-package com.arkapp.bookstore.ui.main
+package com.arkapp.bookstore.utils
 
 import androidx.recyclerview.widget.RecyclerView
 import com.arkapp.bookstore.databinding.RvBookListMainBinding

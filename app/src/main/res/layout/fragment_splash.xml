@@ -4,7 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".ui.splash.SplashFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="108dp"
+        android:layout_height="108dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_big" />
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/textView5"
@@ -14,6 +33,7 @@
         android:layout_marginBottom="32dp"
         android:elevation="8dp"
         android:text="@string/app_name"
+        android:textColor="@color/white"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,20 +43,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <!--<com.google.android.material.button.MaterialButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/signUpBtn"
         android:layout_width="0dp"
         android:layout_height="58dp"
         android:layout_margin="18dp"
         android:text="@string/login_sign_up"
+        android:textColor="@color/colorPrimaryCustomDark"
+        app:backgroundTint="@color/white"
         app:cornerRadius="29dp"
         app:icon="@drawable/ic_person"
         app:iconGravity="textEnd"
         app:iconSize="28dp"
+        app:iconTint="@color/colorPrimaryCustomDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />-->
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

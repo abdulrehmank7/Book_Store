@@ -27,6 +27,7 @@ fun Activity.openLoginScreen() {
             .createSignInIntentBuilder()
             .setTheme(R.style.AppTheme_LoginTheme)
             .setAvailableProviders(providers)
+            .setLogo(R.drawable.ic_launcher_big)
             .setIsSmartLockEnabled(false)
             .build(),
         RC_SIGN_IN
