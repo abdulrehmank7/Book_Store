@@ -39,7 +39,11 @@
         android:id="@+id/borrowedFragment"
         android:name="com.arkapp.bookstore.ui.borrowed.BorrowedFragment"
         android:label="Borrowed Books"
-        tools:layout="@layout/fragment_borrowed" />
+        tools:layout="@layout/fragment_borrowed">
+        <action
+            android:id="@+id/action_borrowedFragment_to_bookDetailsFragment"
+            app:destination="@id/bookDetailsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/settingFragment"

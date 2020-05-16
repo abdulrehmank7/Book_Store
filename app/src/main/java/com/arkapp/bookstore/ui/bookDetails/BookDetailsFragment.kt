@@ -2,7 +2,6 @@ package com.arkapp.bookstore.ui.bookDetails
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,13 +22,12 @@ class BookDetailsFragment : Fragment() {
 
     private val prefRepository by lazy { PrefRepository(requireContext()) }
 
+    private lateinit var bookData: Book
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(android.R.transition.explode)
-
         binding = FragmentBookDetailsBinding.inflate(inflater)
         return binding.root
     }
@@ -38,21 +36,21 @@ class BookDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val bookData = prefRepository.openedBook()
+        bookData = prefRepository.openedBook()
 
-        initBookData(bookData)
-        initDescription(bookData)
-        initFavouriteBtn(bookData)
-
+        initBookData()
+        initDescription()
+        initFavouriteBtn()
+        initBorrowBtn()
     }
 
-    private fun initBookData(bookData: Book) {
+    private fun initBookData() {
         binding.title.text = bookData.title
         binding.author.text = bookData.author
         binding.bookCover.loadImage(bookData.bookImgRes)
     }
 
-    private fun initDescription(bookData: Book) {
+    private fun initDescription() {
         when {
             bookData.isMostSearch -> {
                 binding.descCard.show()
@@ -70,7 +68,7 @@ class BookDetailsFragment : Fragment() {
         }
     }
 
-    private fun initFavouriteBtn(bookData: Book) {
+    private fun initFavouriteBtn() {
         if (prefRepository.isFavouriteExist(bookData)) {
             binding.favourtieBtn.text = getString(R.string.remove_from_fav)
 
@@ -82,9 +80,9 @@ class BookDetailsFragment : Fragment() {
                     "Cancel",
                     DialogInterface.OnClickListener { dialog, _ ->
                         prefRepository.removeFavourite(bookData)
-                        requireContext().toast("Removed successfully!")
-                        binding.favourtieBtn.text = getString(R.string.add_to_favourites)
+                        requireContext().toast("Removed successfully !")
                         dialog.dismiss()
+                        initFavouriteBtn()
                     }
                 )
             }
@@ -99,9 +97,47 @@ class BookDetailsFragment : Fragment() {
                     "Cancel",
                     DialogInterface.OnClickListener { dialog, _ ->
                         prefRepository.addToFavourite(bookData)
-                        requireContext().toast("Added successfully!")
-                        binding.favourtieBtn.text = getString(R.string.remove_from_fav)
+                        requireContext().toast("Added successfully !")
                         dialog.dismiss()
+                        initFavouriteBtn()
+                    }
+                )
+            }
+        }
+    }
+
+    private fun initBorrowBtn() {
+        if (prefRepository.isBorrowExist(bookData)) {
+            binding.borrowBtn.text = getString(R.string.return_book)
+
+            binding.borrowBtn.setOnClickListener {
+                requireContext().showAlertDialog(
+                    "Return Book",
+                    "Do you want to return this book back?",
+                    "Return",
+                    "Cancel",
+                    DialogInterface.OnClickListener { dialog, _ ->
+                        prefRepository.removeBorrow(bookData)
+                        requireContext().toast("Returned successfully !")
+                        dialog.dismiss()
+                        initBorrowBtn()
+                    }
+                )
+            }
+        } else {
+            binding.borrowBtn.text = getString(R.string.borrow_book)
+
+            binding.borrowBtn.setOnClickListener {
+                requireContext().showAlertDialog(
+                    "Borrow Book",
+                    "Do you want to borrow this book?",
+                    "Borrow",
+                    "Cancel",
+                    DialogInterface.OnClickListener { dialog, _ ->
+                        prefRepository.addToBorrow(bookData)
+                        requireContext().toast("Borrowed successfully !")
+                        dialog.dismiss()
+                        initBorrowBtn()
                     }
                 )
             }

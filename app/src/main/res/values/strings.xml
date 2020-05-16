@@ -16,4 +16,6 @@
     <string name="no_favourites_found">No favourites found!</string>
     <string name="login_sign_up">Login / Sign up</string>
     <string name="login_failed">Login Failed</string>
+    <string name="no_borrow_found">You have not borrowed any book!</string>
+    <string name="return_book">Return Book</string>
 </resources>
