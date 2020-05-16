@@ -75,4 +75,9 @@ dependencies {
 
     //Firebase
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
+
+    //Room
+    implementation "androidx.room:room-runtime:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
 }

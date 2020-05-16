@@ -42,7 +42,7 @@ class BorrowListAdapter(
         val bookData = books[position]
         binding.bookTitle.text = bookData.title
         binding.bookAuthor.text = bookData.author
-        binding.bookImg.loadImage(bookData.bookImgRes)
+        binding.bookImg.loadImage(bookData.bookImgRes!!)
 
         binding.parent.setOnClickListener {
             prefRepository.openedBook(bookData)

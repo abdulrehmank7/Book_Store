@@ -1,18 +1,18 @@
 package com.arkapp.bookstore.ui.settings
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.arkapp.bookstore.BuildConfig
+import com.arkapp.bookstore.R
 import com.arkapp.bookstore.data.authentication.getCurrentUser
-import com.arkapp.bookstore.data.authentication.signOut
 import com.arkapp.bookstore.data.repository.PrefRepository
 import com.arkapp.bookstore.databinding.FragmentSettingBinding
+import com.arkapp.bookstore.utils.initVerticalAdapter
 import com.arkapp.bookstore.utils.loadImage
-import com.arkapp.bookstore.utils.showAlertDialog
 
 /**
  * A simple [Fragment] subclass.
@@ -41,17 +41,27 @@ class SettingFragment : Fragment() {
 
         binding.appVersion.text = "version ${BuildConfig.VERSION_NAME}"
 
-        binding.logout.setOnClickListener {
-            requireContext().showAlertDialog(
-                "Logout",
-                "Do you want to logout?",
-                "Logout",
-                "Cancel",
-                DialogInterface.OnClickListener { dialog, _ ->
-                    requireActivity().signOut(prefRepository)
-                    dialog.dismiss()
-                }
-            )
-        }
+        val titles = arrayOf(
+            "Most Searched",
+            "Best Seller",
+            "New Arrival",
+            "Logout"
+        )
+        val icons = arrayOf(
+            R.drawable.ic_search,
+            R.drawable.ic_whatshot,
+            R.drawable.ic_new_releases,
+            R.drawable.ic_exit
+        )
+
+        val adapter = SettingAdapter(
+            requireActivity(),
+            titles,
+            icons,
+            prefRepository,
+            findNavController()
+        )
+        binding.settingRv.initVerticalAdapter(adapter, true)
+
     }
 }

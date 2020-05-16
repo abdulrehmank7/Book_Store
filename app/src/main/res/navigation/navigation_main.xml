@@ -56,9 +56,20 @@
             app:launchSingleTop="true"
             app:popUpTo="@id/settingFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_settingFragment_to_bookTypeFragment"
+            app:destination="@id/bookTypeFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookDetailsFragment"
         android:name="com.arkapp.bookstore.ui.bookDetails.BookDetailsFragment"
         android:label="Book Details" />
+    <fragment
+        android:id="@+id/bookTypeFragment"
+        android:name="com.arkapp.bookstore.ui.bookType.BookTypeFragment"
+        android:label="BookTypeFragment">
+        <action
+            android:id="@+id/action_bookTypeFragment_to_bookDetailsFragment"
+            app:destination="@id/bookDetailsFragment" />
+    </fragment>
 </navigation>

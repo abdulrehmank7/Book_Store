@@ -47,20 +47,21 @@ class BookDetailsFragment : Fragment() {
     private fun initBookData() {
         binding.title.text = bookData.title
         binding.author.text = bookData.author
-        binding.bookCover.loadImage(bookData.bookImgRes)
+        binding.summary.text = bookData.summary
+        binding.bookCover.loadImage(bookData.bookImgRes!!)
     }
 
     private fun initDescription() {
         when {
-            bookData.isMostSearch -> {
+            bookData.isMostSearch!! -> {
                 binding.descCard.show()
                 binding.desc.text = getString(R.string.most_searched)
             }
-            bookData.isBestSeller -> {
+            bookData.isBestSeller!! -> {
                 binding.descCard.show()
                 binding.desc.text = getString(R.string.best_seller)
             }
-            bookData.isNewArrival -> {
+            bookData.isNewArrival!! -> {
                 binding.descCard.show()
                 binding.desc.text = getString(R.string.new_arrival)
             }

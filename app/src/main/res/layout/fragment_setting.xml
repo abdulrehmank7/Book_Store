@@ -51,59 +51,21 @@
             tools:text="test.text@gmail.com" />
 
         <View
-            android:id="@+id/view"
+            android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:background="@color/colorPrimaryCustomDark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/email" />
 
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/ic_exit"
-            android:tint="@color/colorPrimaryCustomDark"
-            app:layout_constraintBottom_toBottomOf="@id/logout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/logout" />
-
-        <TextView
-            android:id="@+id/logout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="?selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:paddingStart="48dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:text="@string/logout"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view" />
-
-        <ImageView
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:src="@drawable/ic_arrow_right"
-            android:tint="@color/colorPrimaryCustomDark"
-
-            app:layout_constraintBottom_toBottomOf="@id/logout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/logout" />
-
-        <View
-            android:id="@+id/view2"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/settingRv"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/colorPrimaryCustomDark"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logout" />
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/appVersion"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
 
         <TextView
             android:id="@+id/appVersion"

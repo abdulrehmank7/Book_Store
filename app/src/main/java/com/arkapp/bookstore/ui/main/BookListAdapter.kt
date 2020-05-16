@@ -18,7 +18,7 @@ import com.arkapp.bookstore.utils.loadImage
  */
 
 class BookListAdapter(
-    private val books: ArrayList<Book>,
+    private val books: List<Book>,
     private val prefRepository: PrefRepository,
     private val navController: NavController
 ) :
@@ -42,7 +42,7 @@ class BookListAdapter(
         val bookData = books[position]
         binding.bookTitle.text = bookData.title
         binding.bookAuthor.text = bookData.author
-        binding.bookImg.loadImage(bookData.bookImgRes)
+        binding.bookImg.loadImage(bookData.bookImgRes!!)
 
         binding.parent.setOnClickListener {
             prefRepository.openedBook(bookData)
