@@ -2,8 +2,10 @@ package com.arkapp.bookstore.data.repository
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.arkapp.bookstore.data.models.Book
 import com.arkapp.bookstore.data.preferences.PREFERENCE_NAME
 import com.arkapp.bookstore.data.preferences.PREF_LOGGED_IN
+import com.arkapp.bookstore.data.preferences.PREF_OPENED_BOOK
 import com.google.gson.Gson
 
 
@@ -65,5 +67,12 @@ class PrefRepository(val context: Context) {
     }
 
     fun setLoggedIn() = PREF_LOGGED_IN.getBoolean()
+
+    fun openedBook(book: Book) {
+        PREF_OPENED_BOOK.put(gson.toJson(book))
+    }
+
+    fun openedBook() = gson.fromJson(PREF_OPENED_BOOK.getString(), Book::class.java)
+
 
 }

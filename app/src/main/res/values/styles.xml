@@ -14,6 +14,7 @@
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="colorOnBackground">@color/colorOnBackground</item>
         <item name="android:statusBarColor">@color/colorPrimaryVariant</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="AppTheme.LoginTheme" parent="FirebaseUI">

@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.RecyclerView
 import com.arkapp.bookstore.R
 import com.arkapp.bookstore.data.models.Book
+import com.arkapp.bookstore.data.repository.PrefRepository
 import com.arkapp.bookstore.utils.loadImage
 
 /**
@@ -14,7 +17,11 @@ import com.arkapp.bookstore.utils.loadImage
  * Contact email - abdulrehman0796@gmail.com
  */
 
-class BookListAdapter(private val books: ArrayList<Book>) :
+class BookListAdapter(
+    private val books: ArrayList<Book>,
+    private val prefRepository: PrefRepository,
+    private val navController: NavController
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -36,6 +43,19 @@ class BookListAdapter(private val books: ArrayList<Book>) :
         binding.bookTitle.text = bookData.title
         binding.bookAuthor.text = bookData.author
         binding.bookImg.loadImage(bookData.bookImgRes)
+
+        binding.parent.setOnClickListener {
+            prefRepository.openedBook(bookData)
+            val extras = FragmentNavigatorExtras(
+                binding.bookImg to "book_open_transition"
+            )
+            navController.navigate(
+                R.id.action_homeFragment_to_bookDetailsFragment,
+                null,
+                null,
+                extras
+            )
+        }
     }
 
 
