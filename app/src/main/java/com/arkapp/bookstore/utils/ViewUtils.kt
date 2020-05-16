@@ -16,6 +16,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.roundToInt
 
 fun Context.toast(msg: String) {
@@ -82,7 +84,8 @@ fun Context?.makeCall(phoneNo: String?) {
 fun getScreenWidthInDPs(context: Context): Int {
 
     val dm = DisplayMetrics()
-    val windowManager: WindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    val windowManager: WindowManager =
+        context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     windowManager.defaultDisplay.getMetrics(dm)
     return (dm.widthPixels / dm.density).roundToInt()
 }
@@ -90,20 +93,25 @@ fun getScreenWidthInDPs(context: Context): Int {
 fun getScreenHeightInDPs(context: Context): Int {
 
     val dm = DisplayMetrics()
-    val windowManager: WindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    val windowManager: WindowManager =
+        context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     windowManager.defaultDisplay.getMetrics(dm)
     return (dm.heightPixels / dm.density).roundToInt()
 }
 
 fun convertDpToPixel(dpValue: Float, context: Context): Float {
-    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                                     dpValue,
-                                     context.resources.displayMetrics)
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        dpValue,
+        context.resources.displayMetrics
+    )
 }
 
 fun Window.disableTouch() {
-    setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-             WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
+    setFlags(
+        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+        WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+    )
 }
 
 fun Window.enableTouch() {
@@ -127,7 +135,8 @@ fun BottomSheetDialog.expandBottomDialogOnOpen() {
     //used to set the height to fullscreen
     setOnShowListener { dialogInterface ->
         val d = dialogInterface as BottomSheetDialog
-        val bottomSheetInternal: View = d.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
+        val bottomSheetInternal: View =
+            d.findViewById(com.google.android.material.R.id.design_bottom_sheet)!!
         BottomSheetBehavior.from(bottomSheetInternal).state = BottomSheetBehavior.STATE_EXPANDED
     }
 }
@@ -136,8 +145,10 @@ fun Context.dpFromPx(px: Float) = px / resources.displayMetrics.density
 
 fun Context.pxFromDp(dp: Float) = dp * resources.displayMetrics.density
 
-fun RecyclerView.initVerticalAdapter(adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
-                                     hasFixedSize: Boolean) {
+fun RecyclerView.initVerticalAdapter(
+    adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>,
+    hasFixedSize: Boolean
+) {
     val llm = LinearLayoutManager(this.context)
     this.setHasFixedSize(hasFixedSize)
     this.setItemViewCacheSize(10)
@@ -165,4 +176,27 @@ fun Context.showAlertDialog(
             show()
         }
 }
+
+fun Date.getFormattedDate(): String {
+    val sdf = SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault())
+    val date = this
+    return sdf.format(date)
+}
+
+
+fun Date.getDaysLeft(): Int {
+    val cal = Calendar.getInstance()
+    val currentCal = Calendar.getInstance()
+
+    cal.time = this
+
+    val diff: Long = cal.timeInMillis - currentCal.timeInMillis
+
+    return if (diff > 0) {
+        val dayCount = diff.toFloat() / (24 * 60 * 60 * 1000)
+        dayCount.toInt()
+    } else 0
+}
+
+
 

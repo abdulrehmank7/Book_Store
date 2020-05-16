@@ -108,7 +108,7 @@ class BookDetailsFragment : Fragment() {
     }
 
     private fun initBorrowBtn() {
-        if (prefRepository.isBorrowExist(bookData)) {
+        if (prefRepository.isBorrowedExist(bookData)) {
             binding.borrowBtn.text = getString(R.string.return_book)
 
             binding.borrowBtn.setOnClickListener {
@@ -118,7 +118,7 @@ class BookDetailsFragment : Fragment() {
                     "Return",
                     "Cancel",
                     DialogInterface.OnClickListener { dialog, _ ->
-                        prefRepository.removeBorrow(bookData)
+                        prefRepository.removedBorrowed(bookData)
                         requireContext().toast("Returned successfully !")
                         dialog.dismiss()
                         initBorrowBtn()
@@ -135,7 +135,8 @@ class BookDetailsFragment : Fragment() {
                     "Borrow",
                     "Cancel",
                     DialogInterface.OnClickListener { dialog, _ ->
-                        prefRepository.addToBorrow(bookData)
+
+                        prefRepository.addToBorrowed(bookData)
                         requireContext().toast("Borrowed successfully !")
                         dialog.dismiss()
                         initBorrowBtn()

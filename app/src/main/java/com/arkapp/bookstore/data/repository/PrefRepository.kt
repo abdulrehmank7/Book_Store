@@ -2,10 +2,15 @@ package com.arkapp.bookstore.data.repository
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.arkapp.bookstore.data.authentication.getCurrentUser
 import com.arkapp.bookstore.data.models.Book
+import com.arkapp.bookstore.data.models.BorrowedBook
+import com.arkapp.bookstore.data.models.UserBooks
 import com.arkapp.bookstore.data.preferences.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class PrefRepository(val context: Context) {
@@ -75,16 +80,60 @@ class PrefRepository(val context: Context) {
 
     fun addToFavourite(book: Book) {
 
-        val allFavBooks = getFavouriteBooks()
-        allFavBooks.add(book)
-        PREF_FAVOURITE_BOOK.put(gson.toJson(allFavBooks))
+        val allUserBook = getAllUserBooks()
+        val userFavBooks = getFavouriteBooks()
+
+        userFavBooks.add(book)
+
+        var userIndex = -1
+
+        allUserBook.forEachIndexed { index, userBooks ->
+            if (userBooks.uid == getCurrentUser()?.uid) {
+                userIndex = index
+                return@forEachIndexed
+            }
+        }
+
+        if (userIndex != -1) {
+            val newUserData = allUserBook[userIndex]
+            newUserData.favorites = userFavBooks
+
+            allUserBook.removeAt(userIndex)
+            allUserBook.add(newUserData)
+        } else {
+            allUserBook.add(UserBooks(getCurrentUser()?.uid!!, userFavBooks, ArrayList()))
+        }
+
+        PREF_USER_BOOKS.put(gson.toJson(allUserBook))
     }
 
     fun removeFavourite(book: Book) {
 
-        val allFavBooks = getFavouriteBooks()
-        allFavBooks.remove(book)
-        PREF_FAVOURITE_BOOK.put(gson.toJson(allFavBooks))
+        val allUserBook = getAllUserBooks()
+        val userFavBooks = getFavouriteBooks()
+
+        userFavBooks.remove(book)
+
+        var userIndex = -1
+
+        allUserBook.forEachIndexed { index, userBooks ->
+            if (userBooks.uid == getCurrentUser()?.uid) {
+                userIndex = index
+                return@forEachIndexed
+            }
+        }
+
+        if (userIndex != -1) {
+            val newUserData = allUserBook[userIndex]
+            newUserData.favorites = userFavBooks
+
+            allUserBook.removeAt(userIndex)
+            allUserBook.add(newUserData)
+        } else {
+            allUserBook.add(UserBooks(getCurrentUser()?.uid!!, userFavBooks, ArrayList()))
+        }
+
+        PREF_USER_BOOKS.put(gson.toJson(allUserBook))
     }
 
     fun isFavouriteExist(book: Book): Boolean {
@@ -94,43 +143,120 @@ class PrefRepository(val context: Context) {
         }
     }
 
-    fun getFavouriteBooks(): ArrayList<Book> {
-        val type = object : TypeToken<ArrayList<Book>>() {}.type
-        PREF_FAVOURITE_BOOK.getString().apply {
-            return if (this.isNotEmpty()) {
-                gson.fromJson(this, type)
-            } else ArrayList()
+    fun getAllUserBooks(): ArrayList<UserBooks> {
+        val type = object : TypeToken<ArrayList<UserBooks>>() {}.type
+
+        PREF_USER_BOOKS.getString().also { allUserBooks ->
+            return if (allUserBooks.isNotEmpty()) {
+                gson.fromJson(allUserBooks, type)
+            } else
+                ArrayList()
         }
     }
 
+    fun getFavouriteBooks(): ArrayList<Book> {
 
-    fun addToBorrow(book: Book) {
-        val allBorrowBooks = getBorrowBooks()
-        allBorrowBooks.add(book)
-        PREF_BORROW_BOOK.put(gson.toJson(allBorrowBooks))
+        val type = object : TypeToken<ArrayList<UserBooks>>() {}.type
+
+        PREF_USER_BOOKS.getString().also { allUserBooks ->
+            if (allUserBooks.isNotEmpty()) {
+                val userBooks: ArrayList<UserBooks> = gson.fromJson(allUserBooks, type)
+
+                userBooks.find { it.uid == getCurrentUser()?.uid }.also {
+                    return it?.favorites ?: ArrayList()
+                }
+            } else
+                return ArrayList()
+        }
     }
 
-    fun removeBorrow(book: Book) {
+    fun getBorrowedBooks(): ArrayList<BorrowedBook> {
 
-        val allBorrowBooks = getBorrowBooks()
-        allBorrowBooks.remove(book)
-        PREF_BORROW_BOOK.put(gson.toJson(allBorrowBooks))
+        val type = object : TypeToken<ArrayList<UserBooks>>() {}.type
+
+        PREF_USER_BOOKS.getString().also { allUserBooks ->
+            if (allUserBooks.isNotEmpty()) {
+                val userBooks: ArrayList<UserBooks> = gson.fromJson(allUserBooks, type)
+
+                userBooks.find { it.uid == getCurrentUser()?.uid }.also {
+                    return it?.borrowedBook ?: ArrayList()
+                }
+            } else
+                return ArrayList()
+        }
     }
 
-    fun isBorrowExist(book: Book): Boolean {
-        val allBorrowBooks = getBorrowBooks()
-        allBorrowBooks.find { it == book }.also {
+    fun addToBorrowed(book: Book) {
+
+        val allUserBook = getAllUserBooks()
+        val userBorrowedBooks = getBorrowedBooks()
+
+        val cal = Calendar.getInstance()
+        cal.add(Calendar.DAY_OF_YEAR, RETURN_BOOK_DAYS)
+
+        userBorrowedBooks.add(BorrowedBook(cal.time, book))
+
+        var userIndex = -1
+
+        allUserBook.forEachIndexed { index, userBooks ->
+            if (userBooks.uid == getCurrentUser()?.uid) {
+                userIndex = index
+                return@forEachIndexed
+            }
+        }
+
+        if (userIndex != -1) {
+            val newUserData = allUserBook[userIndex]
+            newUserData.borrowedBook = userBorrowedBooks
+
+            allUserBook.removeAt(userIndex)
+            allUserBook.add(newUserData)
+        } else {
+            allUserBook.add(UserBooks(getCurrentUser()?.uid!!, ArrayList(), userBorrowedBooks))
+        }
+
+        PREF_USER_BOOKS.put(gson.toJson(allUserBook))
+    }
+
+    fun removedBorrowed(book: Book) {
+
+        val allUserBook = getAllUserBooks()
+        val userBorrowedBooks = getBorrowedBooks()
+
+        val borrowedBook: BorrowedBook
+
+        userBorrowedBooks.find { it.book == book }.also {
+            borrowedBook = it!!
+        }
+
+        userBorrowedBooks.remove(borrowedBook)
+
+        var userIndex = -1
+
+        allUserBook.forEachIndexed { index, userBooks ->
+            if (userBooks.uid == getCurrentUser()?.uid) {
+                userIndex = index
+                return@forEachIndexed
+            }
+        }
+
+        if (userIndex != -1) {
+            val newUserData = allUserBook[userIndex]
+            newUserData.borrowedBook = userBorrowedBooks
+
+            allUserBook.removeAt(userIndex)
+            allUserBook.add(newUserData)
+        } else {
+            allUserBook.add(UserBooks(getCurrentUser()?.uid!!, ArrayList(), userBorrowedBooks))
+        }
+
+        PREF_USER_BOOKS.put(gson.toJson(allUserBook))
+    }
+
+    fun isBorrowedExist(book: Book): Boolean {
+        val allFavBooks = getBorrowedBooks()
+        allFavBooks.find { it.book == book }.also {
             return it != null
         }
     }
-
-    fun getBorrowBooks(): ArrayList<Book> {
-        val type = object : TypeToken<ArrayList<Book>>() {}.type
-        PREF_BORROW_BOOK.getString().apply {
-            return if (this.isNotEmpty()) {
-                gson.fromJson(this, type)
-            } else ArrayList()
-        }
-    }
-
 }

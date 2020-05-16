@@ -21,7 +21,7 @@ class BorrowedFragment : Fragment(R.layout.fragment_borrowed) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val borrow = preRepository.getBorrowBooks()
+        val borrow = preRepository.getBorrowedBooks()
         if (borrow.size > 0) {
             noBorrowTv.hide()
 
