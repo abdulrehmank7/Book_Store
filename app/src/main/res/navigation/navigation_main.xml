@@ -67,7 +67,7 @@
     <fragment
         android:id="@+id/bookTypeFragment"
         android:name="com.arkapp.bookstore.ui.bookType.BookTypeFragment"
-        android:label="BookTypeFragment">
+        android:label="Book List">
         <action
             android:id="@+id/action_bookTypeFragment_to_bookDetailsFragment"
             app:destination="@id/bookDetailsFragment" />

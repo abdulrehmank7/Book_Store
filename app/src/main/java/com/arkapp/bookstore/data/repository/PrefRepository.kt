@@ -259,4 +259,10 @@ class PrefRepository(val context: Context) {
             return it != null
         }
     }
+
+    fun setBookSearchType(searchType: String) {
+        PREF_BOOK_SEARCH_TYPE.put(searchType)
+    }
+
+    fun getBookSearchType() = PREF_BOOK_SEARCH_TYPE.getString()
 }

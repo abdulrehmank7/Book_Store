@@ -20,6 +20,15 @@ interface BookDoa {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(vararg book: Book)
 
+    @Query("SELECT * FROM books WHERE isMostSearch = :boolean")
+    suspend fun getMostSearched(boolean: Boolean = true): List<Book>
+
+    @Query("SELECT * FROM books WHERE isBestSeller = :boolean")
+    suspend fun getBestSeller(boolean: Boolean = true): List<Book>
+
+    @Query("SELECT * FROM books WHERE isNewArrival = :boolean")
+    suspend fun getNewArrival(boolean: Boolean = true): List<Book>
+
     @Query("DELETE FROM books")
     suspend fun deleteAll()
 }

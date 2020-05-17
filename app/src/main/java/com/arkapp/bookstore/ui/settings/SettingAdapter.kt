@@ -10,6 +10,9 @@ import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.arkapp.bookstore.R
 import com.arkapp.bookstore.data.authentication.signOut
+import com.arkapp.bookstore.data.preferences.BOOK_TYPE_BEST_SELLER
+import com.arkapp.bookstore.data.preferences.BOOK_TYPE_MOST_SEARCHED
+import com.arkapp.bookstore.data.preferences.BOOK_TYPE_NEW_ARRIVAL
 import com.arkapp.bookstore.data.repository.PrefRepository
 import com.arkapp.bookstore.utils.loadImage
 import com.arkapp.bookstore.utils.showAlertDialog
@@ -50,6 +53,15 @@ class SettingAdapter(
         binding.title.setOnClickListener {
             when (position) {
                 0 -> {
+                    prefRepository.setBookSearchType(BOOK_TYPE_MOST_SEARCHED)
+                    navController.navigate(R.id.action_settingFragment_to_bookTypeFragment)
+                }
+                1 -> {
+                    prefRepository.setBookSearchType(BOOK_TYPE_BEST_SELLER)
+                    navController.navigate(R.id.action_settingFragment_to_bookTypeFragment)
+                }
+                2 -> {
+                    prefRepository.setBookSearchType(BOOK_TYPE_NEW_ARRIVAL)
                     navController.navigate(R.id.action_settingFragment_to_bookTypeFragment)
                 }
                 3 -> {
