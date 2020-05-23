@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
+import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.util.TypedValue
 import android.view.View
@@ -16,6 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
@@ -198,5 +200,24 @@ fun Date.getDaysLeft(): Int {
     } else 0
 }
 
+var LAST_CLICK_TIME: Long = 0
+
+
+fun isDoubleClicked(minimumClickTimeInMilli: Long): Boolean {
+    return if (getCurrentTimestamp() - LAST_CLICK_TIME < minimumClickTimeInMilli) {
+        true
+    } else {
+        LAST_CLICK_TIME = getCurrentTimestamp()
+        false
+    }
+}
+
+fun getCurrentTimestamp() = System.currentTimeMillis()
+
+fun String.isEmailValid(): Boolean {
+    return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
+}
+
+fun TextInputEditText.value() = text.toString()
 
 

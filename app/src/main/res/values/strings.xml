@@ -17,4 +17,14 @@
     <string name="no_borrow_found">You have not borrowed any book!</string>
     <string name="return_book">Return Book</string>
     <string name="logout">Logout</string>
+
+    <string name="enter_username_email">Enter username/email</string>
+    <string name="enter_password">Enter password</string>
+    <string name="login">Login</string>
+    <string name="not_have_an_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="enter_username">Enter username</string>
+    <string name="enter_email">Enter email</string>
 </resources>

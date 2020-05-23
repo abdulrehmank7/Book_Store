@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.arkapp.bookstore.R
-import com.arkapp.bookstore.data.authentication.signOut
 import com.arkapp.bookstore.data.preferences.BOOK_TYPE_BEST_SELLER
 import com.arkapp.bookstore.data.preferences.BOOK_TYPE_MOST_SEARCHED
 import com.arkapp.bookstore.data.preferences.BOOK_TYPE_NEW_ARRIVAL
@@ -71,7 +70,8 @@ class SettingAdapter(
                         "Logout",
                         "Cancel",
                         DialogInterface.OnClickListener { dialog, _ ->
-                            context.signOut(prefRepository)
+                            prefRepository.setLoggedIn(false)
+                            navController.navigate(R.id.action_settingFragment_to_splashFragment)
                             dialog.dismiss()
                         }
                     )

@@ -2,10 +2,10 @@ package com.arkapp.bookstore.data.repository
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.arkapp.bookstore.data.authentication.getCurrentUser
 import com.arkapp.bookstore.data.models.Book
 import com.arkapp.bookstore.data.models.BorrowedBook
 import com.arkapp.bookstore.data.models.UserBooks
+import com.arkapp.bookstore.data.models.UserLogin
 import com.arkapp.bookstore.data.preferences.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -88,7 +88,7 @@ class PrefRepository(val context: Context) {
         var userIndex = -1
 
         allUserBook.forEachIndexed { index, userBooks ->
-            if (userBooks.uid == getCurrentUser()?.uid) {
+            if (userBooks.uid == getCurrentLoginUser()!!.uid) {
                 userIndex = index
                 return@forEachIndexed
             }
@@ -101,7 +101,7 @@ class PrefRepository(val context: Context) {
             allUserBook.removeAt(userIndex)
             allUserBook.add(newUserData)
         } else {
-            allUserBook.add(UserBooks(getCurrentUser()?.uid!!, userFavBooks, ArrayList()))
+            allUserBook.add(UserBooks(getCurrentLoginUser()?.uid!!, userFavBooks, ArrayList()))
         }
 
         PREF_USER_BOOKS.put(gson.toJson(allUserBook))
@@ -117,7 +117,7 @@ class PrefRepository(val context: Context) {
         var userIndex = -1
 
         allUserBook.forEachIndexed { index, userBooks ->
-            if (userBooks.uid == getCurrentUser()?.uid) {
+            if (userBooks.uid == getCurrentLoginUser()?.uid) {
                 userIndex = index
                 return@forEachIndexed
             }
@@ -130,7 +130,7 @@ class PrefRepository(val context: Context) {
             allUserBook.removeAt(userIndex)
             allUserBook.add(newUserData)
         } else {
-            allUserBook.add(UserBooks(getCurrentUser()?.uid!!, userFavBooks, ArrayList()))
+            allUserBook.add(UserBooks(getCurrentLoginUser()?.uid!!, userFavBooks, ArrayList()))
         }
 
         PREF_USER_BOOKS.put(gson.toJson(allUserBook))
@@ -162,7 +162,7 @@ class PrefRepository(val context: Context) {
             if (allUserBooks.isNotEmpty()) {
                 val userBooks: ArrayList<UserBooks> = gson.fromJson(allUserBooks, type)
 
-                userBooks.find { it.uid == getCurrentUser()?.uid }.also {
+                userBooks.find { it.uid == getCurrentLoginUser()?.uid }.also {
                     return it?.favorites ?: ArrayList()
                 }
             } else
@@ -178,7 +178,7 @@ class PrefRepository(val context: Context) {
             if (allUserBooks.isNotEmpty()) {
                 val userBooks: ArrayList<UserBooks> = gson.fromJson(allUserBooks, type)
 
-                userBooks.find { it.uid == getCurrentUser()?.uid }.also {
+                userBooks.find { it.uid == getCurrentLoginUser()?.uid }.also {
                     return it?.borrowedBook ?: ArrayList()
                 }
             } else
@@ -199,7 +199,7 @@ class PrefRepository(val context: Context) {
         var userIndex = -1
 
         allUserBook.forEachIndexed { index, userBooks ->
-            if (userBooks.uid == getCurrentUser()?.uid) {
+            if (userBooks.uid == getCurrentLoginUser()?.uid) {
                 userIndex = index
                 return@forEachIndexed
             }
@@ -212,7 +212,7 @@ class PrefRepository(val context: Context) {
             allUserBook.removeAt(userIndex)
             allUserBook.add(newUserData)
         } else {
-            allUserBook.add(UserBooks(getCurrentUser()?.uid!!, ArrayList(), userBorrowedBooks))
+            allUserBook.add(UserBooks(getCurrentLoginUser()?.uid!!, ArrayList(), userBorrowedBooks))
         }
 
         PREF_USER_BOOKS.put(gson.toJson(allUserBook))
@@ -234,7 +234,7 @@ class PrefRepository(val context: Context) {
         var userIndex = -1
 
         allUserBook.forEachIndexed { index, userBooks ->
-            if (userBooks.uid == getCurrentUser()?.uid) {
+            if (userBooks.uid == getCurrentLoginUser()?.uid) {
                 userIndex = index
                 return@forEachIndexed
             }
@@ -247,7 +247,7 @@ class PrefRepository(val context: Context) {
             allUserBook.removeAt(userIndex)
             allUserBook.add(newUserData)
         } else {
-            allUserBook.add(UserBooks(getCurrentUser()?.uid!!, ArrayList(), userBorrowedBooks))
+            allUserBook.add(UserBooks(getCurrentLoginUser()?.uid!!, ArrayList(), userBorrowedBooks))
         }
 
         PREF_USER_BOOKS.put(gson.toJson(allUserBook))
@@ -265,4 +265,17 @@ class PrefRepository(val context: Context) {
     }
 
     fun getBookSearchType() = PREF_BOOK_SEARCH_TYPE.getString()
+
+    fun setCurrentLoginUser(userLogin: UserLogin) {
+        PREF_USER_LOGIN.put(gson.toJson(userLogin))
+    }
+
+    fun getCurrentLoginUser(): UserLogin? {
+        PREF_USER_LOGIN.getString().also {
+            return if (it.isEmpty())
+                null
+            else
+                gson.fromJson(it, UserLogin::class.java)
+        }
+    }
 }

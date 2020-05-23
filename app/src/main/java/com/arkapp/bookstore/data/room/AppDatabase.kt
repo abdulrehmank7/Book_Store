@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.arkapp.bookstore.data.models.Book
+import com.arkapp.bookstore.data.models.UserLogin
 import com.arkapp.bookstore.data.repository.BookRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -16,11 +17,13 @@ import kotlinx.coroutines.launch
  */
 
 
-@Database(entities = [Book::class], version = 1)
+@Database(entities = [Book::class, UserLogin::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
 
     abstract fun booksDao(): BookDoa
+
+    abstract fun userLoginDao(): UserLoginDao
 
     companion object {
         const val DATABASE_NAME = "MAIN_BOOK_DATABASE"

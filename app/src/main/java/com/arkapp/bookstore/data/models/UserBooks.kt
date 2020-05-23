@@ -6,7 +6,7 @@ package com.arkapp.bookstore.data.models
  * Contact email - abdulrehman0796@gmail.com
  */
 data class UserBooks(
-    val uid: String,
+    val uid: Int,
     var favorites: ArrayList<Book>,
     var borrowedBook: ArrayList<BorrowedBook>
 )

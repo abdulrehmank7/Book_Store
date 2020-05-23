@@ -8,11 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.arkapp.bookstore.BuildConfig
 import com.arkapp.bookstore.R
-import com.arkapp.bookstore.data.authentication.getCurrentUser
 import com.arkapp.bookstore.data.repository.PrefRepository
 import com.arkapp.bookstore.databinding.FragmentSettingBinding
 import com.arkapp.bookstore.utils.initVerticalAdapter
-import com.arkapp.bookstore.utils.loadImage
 
 /**
  * A simple [Fragment] subclass.
@@ -34,10 +32,9 @@ class SettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val userData = getCurrentUser()
-        binding.userName.text = userData?.displayName
+        val userData = prefRepository.getCurrentLoginUser()
+        binding.userName.text = userData?.userName
         binding.email.text = userData?.email
-        binding.userImg.loadImage(userData?.photoUrl.toString())
 
         binding.appVersion.text = "version ${BuildConfig.VERSION_NAME}"
 

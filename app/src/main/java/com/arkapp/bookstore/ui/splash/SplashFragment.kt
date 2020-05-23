@@ -7,7 +7,6 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.arkapp.bookstore.R
-import com.arkapp.bookstore.data.authentication.openLoginScreen
 import com.arkapp.bookstore.data.repository.PrefRepository
 import com.arkapp.bookstore.utils.hide
 import kotlinx.android.synthetic.main.fragment_splash.*
@@ -25,7 +24,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     private fun initSignUpBtn() {
         if (!prefRepository.setLoggedIn()) {
             signUpBtn.setOnClickListener {
-                requireActivity().openLoginScreen()
+                findNavController().navigate(R.id.action_splashFragment_to_signUpFragment)
             }
         } else
             signUpBtn.hide()
