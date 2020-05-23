@@ -6,10 +6,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.arkapp.bookstore.R
+import com.arkapp.bookstore.data.database.AppDatabase
 import com.arkapp.bookstore.data.preferences.ENTERED_USER_EMAIL
 import com.arkapp.bookstore.data.preferences.ENTERED_USER_NAME
 import com.arkapp.bookstore.data.repository.PrefRepository
-import com.arkapp.bookstore.data.room.AppDatabase
 import com.arkapp.bookstore.utils.hide
 import com.arkapp.bookstore.utils.initVerticalAdapter
 import com.arkapp.bookstore.utils.show
@@ -32,7 +32,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun initBookData() {
         lifecycleScope.launch(Dispatchers.Main) {
             val bookDao =
-                AppDatabase.getDatabase(requireActivity().application, lifecycleScope).booksDao()
+                AppDatabase.getDatabase(requireActivity().application).booksDao()
 
             val books = bookDao.getAllBooks()
 
@@ -52,7 +52,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun addUserName() {
         if (ENTERED_USER_NAME.isNotEmpty() || ENTERED_USER_EMAIL.isNotEmpty()) {
             lifecycleScope.launch(Dispatchers.Main) {
-                val userLoginDao = AppDatabase.getDatabase(requireContext(), this).userLoginDao()
+                val userLoginDao = AppDatabase.getDatabase(requireContext()).userLoginDao()
 
                 if (ENTERED_USER_NAME.isNotEmpty()) {
                     val userData = userLoginDao.checkLoggedInUser(ENTERED_USER_NAME)

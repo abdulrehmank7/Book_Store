@@ -9,11 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.arkapp.bookstore.R
+import com.arkapp.bookstore.data.database.AppDatabase
+import com.arkapp.bookstore.data.database.DatabaseHelper
 import com.arkapp.bookstore.data.models.UserLogin
 import com.arkapp.bookstore.data.preferences.ENTERED_USER_EMAIL
 import com.arkapp.bookstore.data.preferences.ENTERED_USER_NAME
 import com.arkapp.bookstore.data.repository.PrefRepository
-import com.arkapp.bookstore.data.room.AppDatabase
 import com.arkapp.bookstore.databinding.FragmentSignupBinding
 import com.arkapp.bookstore.utils.*
 import kotlinx.coroutines.Dispatchers
@@ -43,6 +44,9 @@ class SignUpFragment : Fragment() {
 
         ENTERED_USER_NAME = ""
         ENTERED_USER_EMAIL = ""
+
+        val helper = DatabaseHelper(requireContext(), lifecycleScope)
+        helper.addBooksToDB()
 
         binding.signUpBtn.setOnClickListener {
             if (isDoubleClicked(1000)) return@setOnClickListener
@@ -128,7 +132,7 @@ class SignUpFragment : Fragment() {
     private fun checkCredentials() {
         lifecycleScope.launch(Dispatchers.Main) {
 
-            val userLoginDao = AppDatabase.getDatabase(requireContext(), this).userLoginDao()
+            val userLoginDao = AppDatabase.getDatabase(requireContext()).userLoginDao()
 
             val userData =
                 if (binding.userNameEt.value().isEmailValid()) {
@@ -229,7 +233,7 @@ class SignUpFragment : Fragment() {
 
     private fun checkIfAccountExist() {
         lifecycleScope.launch(Dispatchers.Main) {
-            val userLoginDao = AppDatabase.getDatabase(requireContext(), this).userLoginDao()
+            val userLoginDao = AppDatabase.getDatabase(requireContext()).userLoginDao()
 
             val userData =
                 userLoginDao.checkLoggedInUser(binding.signUpUserNameEt.value())
@@ -262,7 +266,7 @@ class SignUpFragment : Fragment() {
 
     private fun storeCredentials() {
         lifecycleScope.launch(Dispatchers.Main) {
-            val userLoginDao = AppDatabase.getDatabase(requireContext(), this).userLoginDao()
+            val userLoginDao = AppDatabase.getDatabase(requireContext()).userLoginDao()
 
             userLoginDao.insert(
                 UserLogin(

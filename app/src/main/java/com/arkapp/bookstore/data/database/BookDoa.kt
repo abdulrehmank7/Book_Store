@@ -1,4 +1,4 @@
-package com.arkapp.bookstore.data.room
+package com.arkapp.bookstore.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert
