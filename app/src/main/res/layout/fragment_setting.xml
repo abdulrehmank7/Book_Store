@@ -3,21 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.settings.SettingFragment">
+        android:orientation="vertical">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/materialCardView"
             android:layout_width="98dp"
             android:layout_height="98dp"
+            android:layout_gravity="center"
             android:layout_margin="16dp"
-            app:cardCornerRadius="49dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:cardCornerRadius="49dp">
 
             <ImageView
                 android:id="@+id/userImg"
@@ -27,27 +24,23 @@
                 android:src="@drawable/ic_users" />
         </com.google.android.material.card.MaterialCardView>
 
+
         <TextView
             android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_gravity="center"
             android:textSize="26sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/materialCardView"
-            app:layout_constraintStart_toStartOf="@+id/materialCardView"
-            app:layout_constraintTop_toBottomOf="@+id/materialCardView"
             tools:text="Test User" />
 
         <TextView
             android:id="@+id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_margin="8dp"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/materialCardView"
-            app:layout_constraintStart_toStartOf="@+id/materialCardView"
-            app:layout_constraintTop_toBottomOf="@+id/userName"
             tools:text="test.text@gmail.com" />
 
         <View
@@ -55,27 +48,21 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:layout_marginTop="8dp"
-            android:background="@color/colorPrimaryCustomDark"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/email" />
+            android:background="@color/colorPrimaryCustomDark" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/settingRv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/appVersion"
-            app:layout_constraintTop_toBottomOf="@+id/view2" />
+            android:layout_weight="1"
+            android:overScrollMode="never" />
 
         <TextView
             android:id="@+id/appVersion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_gravity="center|bottom"
+            android:layout_margin="8dp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

@@ -49,7 +49,7 @@ class SettingAdapter(
         binding.title.text = bookData
         binding.settingIcon.loadImage(icons[position])
 
-        binding.title.setOnClickListener {
+        binding.parent.setOnClickListener {
             when (position) {
                 0 -> {
                     prefRepository.setBookSearchType(BOOK_TYPE_MOST_SEARCHED)
